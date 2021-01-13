@@ -2,7 +2,7 @@
 
 Jueguito en Vanilla JS, HTML & CSS.  
 
-Try it [here!](https://alejandramruiz.github.io/expense-tracker/)
+Try it [here!](https://alejandramruiz.github.io/snake-game/)
 
 <!-- <image src ="images/rps-img.png" width="750" height="435"> -->
 
