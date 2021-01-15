@@ -1,25 +1,91 @@
 
-// change 'var'
-var canvas;
-var canvasContext;
-var ballX = 50;
+const canvas = document.getElementById('canvas');
+const canvasContext = canvas.getContext('2d');
+let snakeBody = 50;
+
+// let snakeBody = [
+//     { x: 20, y: 30 },
+//     { x: 10, y: 30 },
+//     { x: 0, y: 30 },
+// ]
+
+// let snakeBody = [
+//     { x: 30, y: 30 },
+//     { x: 20, y: 30 },
+//     { x: 10, y: 30 },
+// ]
+
+// let snakeBody = [
+//     { x: 40, y: 30 },
+//     { x: 30, y: 30 },
+//     { x: 20, y: 30 },
+// ]
+
+// let snakeBody = [
+//     { x: 40, y: 30 },
+//     { x: 30, y: 30 },
+//     { x: 20, y: 30 },
+// ]
+
+// let snakeBody = [
+//     { x: 40, y: 40 },
+//     { x: 40, y: 30 },
+//     { x: 30, y: 30 },
+// ]
+
+// let snakeBody = [
+//     { x: 40, y: 50 },
+//     { x: 40, y: 40 },
+//     { x: 40, y: 30 },
+// ]
+
+
+
+// add 10 to x to go right each time right arrow pressed
+// subtract 10 to x to go left each time left arrow pressed
+// add 10 to y to go down each time down arrow pressed (consider x position will also move for rest of body not head)
+// subtract 10 to y to go up each time up arrow pressed (consider x position will also move for rest of body not head)
+
 
 
 window.onload = function()  {
-    canvas = document.getElementById('canvas');
-    canvasContext = canvas.getContext('2d');
-    setInterval(drawEverything, 500);
+    setInterval(function()  {
+        moveSnake();
+        drawEverything();} 
+        ,500)
 }
 
-function drawEverything() {
-    ballX = ballX + 20;
 
-    console.log(ballX);
+function drawEverything() {
+    snakeBody = snakeBody + 20;
+
+    console.log(snakeBody);
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
     canvasContext.fillStyle = 'limegreen';
-    canvasContext.fillRect(ballX,300,75,25);
+    canvasContext.fillRect(snakeBody,300,75,25);
 }
+
+// function moveSnake()    {
+//     snakeBody = snakeBody + 5;
+// }
+
+function moveSnake()    {
+    snakeBody = snakeBody + 5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
