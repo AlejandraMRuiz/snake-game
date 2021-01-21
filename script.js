@@ -1,13 +1,23 @@
+// TEST CASE
+// Description: Get snake to appear on canvas but by using an object. 
+
+// 1. Load page
+// EXPECTATION: Snake appears on screen (inmobile)
+// ACTUAL: nothing happens
+
+
+
 
 const canvas = document.getElementById('canvas');
 const canvasContext = canvas.getContext('2d');
-let snakeBody = 50;
+// let snakeBody = 50;
 
-// let snakeBody = [
-//     { x: 20, y: 30 },
-//     { x: 10, y: 30 },
-//     { x: 0, y: 30 },
-// ]
+// 
+let snakeBody = [
+    { x: 20, y: 30 },
+    { x: 10, y: 30 },
+    { x: 0, y: 30 },
+]
 
 // let snakeBody = [
 //     { x: 30, y: 30 },
@@ -70,13 +80,23 @@ function drawEverything() {
 //     snakeBody = snakeBody + 5;
 // }
 
-function moveSnake()    {
-    snakeBody = snakeBody + 5;
-}
+
+// function moveSnakeUp()    {
+//    event listener on each arrow button
+//    on click let snakeBody = [x here y there]
+//    buuuuut you need to have a for OR while loop 
+//    so you wouldn't have to manually increment by 10 each time
+// (you may have to take this out of a function)
+// }
 
 
 
+// TEST CASE
+// Description: Move snake up 
 
+// 1. Push "up" arrow button
+// EXPECTATION: Snake moves in upward direction (no stopping)
+// ACTUAL: nothing happens
 
 
 
