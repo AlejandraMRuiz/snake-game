@@ -1,5 +1,5 @@
 // TEST CASE
-// Description: Get snake to appear on canvas but by using an object. 
+// Description: Add mid section and tail to snake. 
 
 // 1. Load page
 // EXPECTATION: Snake appears on screen (immobile)
@@ -9,79 +9,74 @@
 
 const canvas = document.getElementById('canvas');
 const canvasContext = canvas.getContext('2d');
-// let snakeBody = 50;
-let snakeBody = {
-    x: 40, y: 50,
-}
 
-let direction = null;
+let snake = {
+    direction: 'RIGHT',
+    body: [ 
+        { x: 20, y: 30 }, 
+        { x: 10, y: 30 },
+        { x: 0, y: 30 }
+    ],
+    speed: 5
+};
 
 
 window.onload = function()  {
     setInterval(function()  {
-        // moveSnake(snakeBody);
-        drawEverything(direction);} 
+        drawEverything(snake.direction);} 
         ,500)
-}
+};
 
 document.onkeydown = function (e) { 
     e.preventDefault();    
-    if (e.key == " ") {        
-        direction = "STOP";    
+    if (e.key == ' ') {        
+        snake.direction = 'STOP';    
     }
-    if (e.key == "ArrowUp") {
-        direction = "UP";   
-        console.log('up'); 
+    if (e.key == 'ArrowUp') {
+        snake.direction = 'UP';   
     }    
-    if (e.key == "ArrowDown") {        
-        direction = "DOWN";    
+    if (e.key == 'ArrowDown') {        
+        snake.direction = 'DOWN';    
     }
-    if (e.key == "ArrowLeft") {
-        direction = "LEFT";    
+    if (e.key == 'ArrowLeft') {
+        snake.direction = 'LEFT';    
     }
-    if (e.key == "ArrowRight") {        
-        direction = "RIGHT";    
+    if (e.key == 'ArrowRight') {        
+        snake.direction = 'RIGHT';    
     }    
 };
 
 
 
-
-function drawEverything(direction) {
-    if (direction === 'RIGHT')  {
-        snakeBody.x = snakeBody.x + 20;
+// funct took direction (snake.direction didn't work):
+function drawEverything() {
+    if (snake.direction === 'RIGHT')  {
+        snake.body[0].x = snake.body[0].x + 10;
     }  
 
-    if (direction === 'LEFT')  {
-        snakeBody.x = snakeBody.x - 20;
+    if (snake.direction === 'LEFT')  {
+        snake.body[0].x = snake.body[0].x - 10;
     }  
 
-    if (direction === 'UP')  {
-        snakeBody.y = snakeBody.y - 20;
+    if (snake.direction === 'UP')  {
+        snake.body[0].y = snake.body[0].y - 10;
     }  
 
-    if (direction === 'DOWN')  {
-        snakeBody.y = snakeBody.y + 20;
+    if (snake.direction === 'DOWN')  {
+        snake.body[0].y = snake.body[0].y + 10;
     }  
-   
 
-
-    console.log(snakeBody);
+    console.log(snake.body[0]);
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
     canvasContext.fillStyle = 'limegreen';
-    canvasContext.fillRect(snakeBody.x,snakeBody.y,25,25);
-    // canvasContext.fillRect(snakeBody.x,300,75,25);
-}
+    canvasContext.fillRect(snake.body[0].x,snake.body[0].y,10,10);
+};
 
 
 
 
-// function moveSnake(snake) {
-//     if (snake.direction === 'RIGHT') {
-//       snake.body[0].x += snake.speed;
-//     }
-// }
+
 
 
 // let originalSnake = {
@@ -93,20 +88,11 @@ function drawEverything(direction) {
 // }
 
 
-// let snake = {
-//     direction: 'RIGHT',
-//     body: [ 
-//         { x: 20, y: 30 }, 
-//         { x: 10, y: 30 },
-//         { x: 0, y: 30 }
-//     ],
-//     speed: 5
-// }
 
 
 
 
-// moveSnake();
+
 
 
 
@@ -163,17 +149,6 @@ function drawEverything(direction) {
 //    so you wouldn't have to manually increment by 10 each time
 // (you may have to take this out of a function)
 // }
-
-
-
-// TEST CASE
-// Description: Move snake up 
-
-// 1. Push "up" arrow button
-// EXPECTATION: Snake moves in upward direction (no stopping)
-// ACTUAL: nothing happens
-
-
 
 
 
