@@ -11,7 +11,7 @@ const canvas = document.getElementById('canvas');
 const canvasContext = canvas.getContext('2d');
 
 let snake = {
-    direction: 'RIGHT',
+    direction: null,
     body: [ 
         { x: 20, y: 30 }, 
         { x: 10, y: 30 },
@@ -47,8 +47,6 @@ document.onkeydown = function (e) {
 };
 
 
-
-// funct took direction (snake.direction didn't work):
 function drawEverything() {
     if (snake.direction === 'RIGHT')  {
         snake.body[0].x = snake.body[0].x + 10;
@@ -71,6 +69,9 @@ function drawEverything() {
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
     canvasContext.fillStyle = 'limegreen';
     canvasContext.fillRect(snake.body[0].x,snake.body[0].y,10,10);
+    canvasContext.fillRect(snake.body[1].x,snake.body[1].y,10,10);
+    canvasContext.fillRect(snake.body[2].x,snake.body[2].y,10,10);
+    // for loop any continuation of the above so snake grows as he eats.
 };
 
 
