@@ -2,22 +2,113 @@
 // Description: Get snake to appear on canvas but by using an object. 
 
 // 1. Load page
-// EXPECTATION: Snake appears on screen (inmobile)
+// EXPECTATION: Snake appears on screen (immobile)
 // ACTUAL: nothing happens
-
 
 
 
 const canvas = document.getElementById('canvas');
 const canvasContext = canvas.getContext('2d');
 // let snakeBody = 50;
+let snakeBody = {
+    x: 40, y: 50,
+}
 
-// 
-let snakeBody = [
-    { x: 20, y: 30 },
-    { x: 10, y: 30 },
-    { x: 0, y: 30 },
-]
+let direction = null;
+
+
+window.onload = function()  {
+    setInterval(function()  {
+        // moveSnake(snakeBody);
+        drawEverything(direction);} 
+        ,500)
+}
+
+document.onkeydown = function (e) { 
+    e.preventDefault();    
+    if (e.key == " ") {        
+        direction = "STOP";    
+    }
+    if (e.key == "ArrowUp") {
+        direction = "UP";   
+        console.log('up'); 
+    }    
+    if (e.key == "ArrowDown") {        
+        direction = "DOWN";    
+    }
+    if (e.key == "ArrowLeft") {
+        direction = "LEFT";    
+    }
+    if (e.key == "ArrowRight") {        
+        direction = "RIGHT";    
+    }    
+};
+
+
+
+
+function drawEverything(direction) {
+    if (direction === 'RIGHT')  {
+        snakeBody.x = snakeBody.x + 20;
+    }  
+
+    if (direction === 'LEFT')  {
+        snakeBody.x = snakeBody.x - 20;
+    }  
+
+    if (direction === 'UP')  {
+        snakeBody.y = snakeBody.y - 20;
+    }  
+
+    if (direction === 'DOWN')  {
+        snakeBody.y = snakeBody.y + 20;
+    }  
+   
+
+
+    console.log(snakeBody);
+    canvasContext.fillStyle = 'black';
+    canvasContext.fillRect(0,0,canvas.width,canvas.height);
+    canvasContext.fillStyle = 'limegreen';
+    canvasContext.fillRect(snakeBody.x,snakeBody.y,25,25);
+    // canvasContext.fillRect(snakeBody.x,300,75,25);
+}
+
+
+
+
+// function moveSnake(snake) {
+//     if (snake.direction === 'RIGHT') {
+//       snake.body[0].x += snake.speed;
+//     }
+// }
+
+
+// let originalSnake = {
+//     body: [ 
+//         { x: 20, y: 30 }, 
+//         { x: 10, y: 30 },
+//         { x: 0, y: 30 }
+//     ],
+// }
+
+
+// let snake = {
+//     direction: 'RIGHT',
+//     body: [ 
+//         { x: 20, y: 30 }, 
+//         { x: 10, y: 30 },
+//         { x: 0, y: 30 }
+//     ],
+//     speed: 5
+// }
+
+
+
+
+// moveSnake();
+
+
 
 // let snakeBody = [
 //     { x: 30, y: 30 },
@@ -50,7 +141,7 @@ let snakeBody = [
 // ]
 
 
-
+// 10x10 pixels 
 // add 10 to x to go right each time right arrow pressed
 // subtract 10 to x to go left each time left arrow pressed
 // add 10 to y to go down each time down arrow pressed (consider x position will also move for rest of body not head)
@@ -58,23 +149,7 @@ let snakeBody = [
 
 
 
-window.onload = function()  {
-    setInterval(function()  {
-        moveSnake();
-        drawEverything();} 
-        ,500)
-}
 
-
-function drawEverything() {
-    snakeBody = snakeBody + 20;
-
-    console.log(snakeBody);
-    canvasContext.fillStyle = 'black';
-    canvasContext.fillRect(0,0,canvas.width,canvas.height);
-    canvasContext.fillStyle = 'limegreen';
-    canvasContext.fillRect(snakeBody,300,75,25);
-}
 
 // function moveSnake()    {
 //     snakeBody = snakeBody + 5;
