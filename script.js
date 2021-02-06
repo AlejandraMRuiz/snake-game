@@ -1,21 +1,31 @@
 // TEST CASE
-// Description: Get mid section and tail moving with snake head. 
+// Description: Get entire snake body moving down together, seamlessly. 
 
-// 1. Press 'R' arrow btn
-// EXPECTATION: Snake's entire body moves right
-// ACTUAL: Works!
+// 1. Press down arrow btn
 
-// TEST CASE
-// Description: Get mid section and tail moving with snake head. 
+// EXPECTATION: 
+// Head moves down, 
+// midsection goes to head's prior position
+// and tail goes to midsection's original position.
 
-// 1. Press 'R' arrow btn
-// EXPECTATION: Snake's entire body moves right
-// ACTUAL: Works!
+// ACTUAL: All merge to head, leaving an apparency of one single square.
+
 
 
 
 const canvas = document.getElementById('canvas');
 const canvasContext = canvas.getContext('2d');
+
+let originalSnake = {
+    direction: null,
+    body: [ 
+        { x: 20, y: 30 }, 
+        { x: 10, y: 30 },
+        { x: 0, y: 30 }
+    ],
+    speed: 5
+};
+
 
 let snake = {
     direction: null,
@@ -71,8 +81,11 @@ function drawEverything() {
         snake.body[0].y = snake.body[0].y - 10;
     }  
 
+// add 10 to y to go down each time down arrow pressed (consider x position will also move for rest of body not head)
     if (snake.direction === 'DOWN')  {
         snake.body[0].y = snake.body[0].y + 10;
+        snake.body[1] = originalSnake[0];
+        snake.body[2] = originalSnake[1];
     }  
 
     console.log(snake.body[0]);
@@ -91,77 +104,11 @@ function drawEverything() {
 
 
 
-// let originalSnake = {
-//     body: [ 
-//         { x: 20, y: 30 }, 
-//         { x: 10, y: 30 },
-//         { x: 0, y: 30 }
-//     ],
-// }
-
-
-
-
-
-
-
-
-
-
-// let snakeBody = [
-//     { x: 30, y: 30 },
-//     { x: 20, y: 30 },
-//     { x: 10, y: 30 },
-// ]
-
-// let snakeBody = [
-//     { x: 40, y: 30 },
-//     { x: 30, y: 30 },
-//     { x: 20, y: 30 },
-// ]
-
-// let snakeBody = [
-//     { x: 40, y: 30 },
-//     { x: 30, y: 30 },
-//     { x: 20, y: 30 },
-// ]
-
-// let snakeBody = [
-//     { x: 40, y: 40 },
-//     { x: 40, y: 30 },
-//     { x: 30, y: 30 },
-// ]
-
-// let snakeBody = [
-//     { x: 40, y: 50 },
-//     { x: 40, y: 40 },
-//     { x: 40, y: 30 },
-// ]
-
-
 // 10x10 pixels 
 // add 10 to x to go right each time right arrow pressed
 // subtract 10 to x to go left each time left arrow pressed
 // add 10 to y to go down each time down arrow pressed (consider x position will also move for rest of body not head)
 // subtract 10 to y to go up each time up arrow pressed (consider x position will also move for rest of body not head)
-
-
-
-
-
-// function moveSnake()    {
-//     snakeBody = snakeBody + 5;
-// }
-
-
-// function moveSnakeUp()    {
-//    event listener on each arrow button
-//    on click let snakeBody = [x here y there]
-//    buuuuut you need to have a for OR while loop 
-//    so you wouldn't have to manually increment by 10 each time
-// (you may have to take this out of a function)
-// }
-
 
 
 
