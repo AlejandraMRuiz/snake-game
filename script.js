@@ -1,9 +1,16 @@
 // TEST CASE
-// Description: Add mid section and tail to snake. 
+// Description: Get mid section and tail moving with snake head. 
 
-// 1. Load page
-// EXPECTATION: Snake appears on screen (immobile)
-// ACTUAL: nothing happens
+// 1. Press 'R' arrow btn
+// EXPECTATION: Snake's entire body moves right
+// ACTUAL: Works!
+
+// TEST CASE
+// Description: Get mid section and tail moving with snake head. 
+
+// 1. Press 'R' arrow btn
+// EXPECTATION: Snake's entire body moves right
+// ACTUAL: Works!
 
 
 
@@ -50,10 +57,14 @@ document.onkeydown = function (e) {
 function drawEverything() {
     if (snake.direction === 'RIGHT')  {
         snake.body[0].x = snake.body[0].x + 10;
+        snake.body[1].x = snake.body[1].x + 10;
+        snake.body[2].x = snake.body[2].x + 10;
     }  
 
     if (snake.direction === 'LEFT')  {
         snake.body[0].x = snake.body[0].x - 10;
+        snake.body[1].x = snake.body[1].x - 10;
+        snake.body[2].x = snake.body[2].x - 10;
     }  
 
     if (snake.direction === 'UP')  {
