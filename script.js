@@ -1,27 +1,41 @@
 // TEST CASE
 // Description: Get entire snake body moving down together, seamlessly. 
 
-// 1. Press down arrow btn
+// 1. Press right arrow btn
+// EXPECTATION: 
+// Entire snake moves right.
+// ACTUAL: Works.
 
+// 2. Press down arrown btn.
 // EXPECTATION: 
 // Head moves down, 
 // midsection goes to head's prior position
 // and tail goes to midsection's original position.
 
-// ACTUAL: All merge to head, leaving an apparency of one single square.
+// ACTUAL: Head moves down as expected but midsection and tail 
+// (almost) go back to their original position.
 
 
 
 
 const canvas = document.getElementById('canvas');
 const canvasContext = canvas.getContext('2d');
+const growBtn = document.getElementById('grow-btn');
 
-let originalSnake = {
+growBtn.addEventListener("click", growSnake);
+
+function growSnake()    {
+    // add squares to head
+    tail.body[0].x = tail.body[0].x + 10; 
+    console.log("This is the grow", tail.body[0].x);
+}
+
+let tail = {
     direction: null,
     body: [ 
         { x: 20, y: 30 }, 
-        { x: 10, y: 30 },
-        { x: 0, y: 30 }
+        // { x: 10, y: 30 },
+        // { x: 0, y: 30 }
     ],
     speed: 5
 };
@@ -29,10 +43,13 @@ let originalSnake = {
 
 let snake = {
     direction: null,
+    length: 1,
+    dimensions: {width: 10, height: 10},
     body: [ 
-        { x: 20, y: 30 }, 
-        { x: 10, y: 30 },
-        { x: 0, y: 30 }
+        { x: 10, y: 10 }, 
+        // { x: 10, y: 30 },
+        // { x: 0, y: 30 }
+
     ],
     speed: 5
 };
@@ -40,7 +57,7 @@ let snake = {
 
 window.onload = function()  {
     setInterval(function()  {
-        drawEverything(snake.direction);} 
+        drawEverything();} 
         ,500)
 };
 
@@ -67,35 +84,47 @@ document.onkeydown = function (e) {
 function drawEverything() {
     if (snake.direction === 'RIGHT')  {
         snake.body[0].x = snake.body[0].x + 10;
-        snake.body[1].x = snake.body[1].x + 10;
-        snake.body[2].x = snake.body[2].x + 10;
+       // snake.body[1].x = snake.body[1].x + 10;
+      //  snake.body[2].x = snake.body[2].x + 10;
+      console.log("Snake head position is x = ", snake.body[0].x + " y = ", snake.body[0].y)
+
     }  
 
     if (snake.direction === 'LEFT')  {
         snake.body[0].x = snake.body[0].x - 10;
-        snake.body[1].x = snake.body[1].x - 10;
-        snake.body[2].x = snake.body[2].x - 10;
+      //  snake.body[1].x = snake.body[1].x - 10;
+       // snake.body[2].x = snake.body[2].x - 10;
+       console.log("Snake head position is x = ", snake.body[0].x + " y = ", snake.body[0].y)
     }  
 
     if (snake.direction === 'UP')  {
         snake.body[0].y = snake.body[0].y - 10;
+        console.log("Snake head position is x = ", snake.body[0].x + " y = ", snake.body[0].y)
     }  
 
 // add 10 to y to go down each time down arrow pressed (consider x position will also move for rest of body not head)
     if (snake.direction === 'DOWN')  {
         snake.body[0].y = snake.body[0].y + 10;
-        snake.body[1] = originalSnake[0];
-        snake.body[2] = originalSnake[1];
+        // how do I make [1] and [2] move to head and mid position.
+        // snake.body[1].y = snake.body[1].y + 10;
+        // snake.body[2].y = snake.body[2].y + 10;
+       // snake.body[1] = tail.body[0];
+       // snake.body[2] = tail.body[1];
+       console.log("Snake head position is x = ", snake.body[0].x + " y = ", snake.body[0].y)
     }  
+
+
+
 
     console.log(snake.body[0]);
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
     canvasContext.fillStyle = 'limegreen';
-    canvasContext.fillRect(snake.body[0].x,snake.body[0].y,10,10);
-    canvasContext.fillRect(snake.body[1].x,snake.body[1].y,10,10);
-    canvasContext.fillRect(snake.body[2].x,snake.body[2].y,10,10);
-    // for loop any continuation of the above so snake grows as he eats.
+    canvasContext.fillRect(snake.body[0].x,snake.body[0].y,snake.dimensions.height, snake.dimensions.width);
+ //   canvasContext.fillRect(snake.body[1].x,snake.body[1].y,10,10);
+//canvasContext.fillRect(snake.body[2].x,snake.body[2].y,10,10);
+// for loop any continuation of the above so snake grows as he eats.
+
 };
 
 
