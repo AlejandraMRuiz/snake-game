@@ -1,19 +1,17 @@
 // TEST CASE
 // Description: Get entire snake body moving down together, seamlessly. 
 
-// 1. Press right arrow btn
+// 1. press right arrow btn.
 // EXPECTATION: 
-// Entire snake moves right.
-// ACTUAL: Works.
+// entire snake moves right.
+// ACTUAL: works.
 
-// 2. Press down arrown btn.
+// 2. press down arrown btn.
 // EXPECTATION: 
-// Head moves down, 
+// head moves down, 
 // midsection goes to head's prior position
 // and tail goes to midsection's original position.
-
-// ACTUAL: Head moves down as expected but midsection and tail 
-// collapse into head.
+// ACTUAL: all 3 snake parts move down, but not in a chain.
 
 
 
