@@ -18,6 +18,7 @@
 
 const canvas = document.getElementById('canvas');
 const canvasContext = canvas.getContext('2d');
+const size = 10;
 
 
 const snake = {
@@ -38,6 +39,8 @@ const snake = {
     ],
     speed: 10
 };
+
+let food = { x: null, y: null };
 
 
 let interval;
@@ -113,47 +116,47 @@ function checkEatsItself()  {
     let headX = snake.body[0].x
     let headY = snake.body[0].y
 
-    console.log("heads ", headX, headY)
-
     bodyToCheck.map(bodyPart => {
         if (headX == bodyPart.x && headY == bodyPart.y)   {
         endGame();
         }
-    console.log("x&y ", bodyPart.x, bodyPart.y)
     })
-    console.log("check ")
+}
+
+function addApple()    {
+    let tempX
+    let tempY
+
+    if (food.x == null && food.y == null)   {
+    tempX = Math.floor(Math.random() * (canvas.width / size)) * size;
+    tempY = Math.floor(Math.random() * (canvas.height / size)) * size;
+    }
+
+    snake.body.map(bodyPart => {
+        if (tempX == bodyPart.x && tempY == bodyPart.y)   {
+            addApple();
+        }
+    })
+
+    food.x = tempX;
+    food.y = tempY;
 }
 
 function drawEverything() { 
     moveSnake();
+    addApple();
     checkBorder();
     checkEatsItself();
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
+    canvasContext.fillStyle = 'red';
+    canvasContext.fillRect(food.x, food.y, size, size);
     canvasContext.fillStyle = 'limegreen';
 
     for (let i = 0; i < snake.body.length; i++)  {
-        canvasContext.fillRect(snake.body[i].x, snake.body[i].y, 10, 10);
+        canvasContext.fillRect(snake.body[i].x, snake.body[i].y, size, size);
     }
 };
-
-
-
-
-
-
-
-// 10x10 pixels 
-// add 10 to x to go right each time right arrow pressed
-// subtract 10 to x to go left each time left arrow pressed
-// add 10 to y to go down each time down arrow pressed (consider x position will also move for rest of body not head)
-// subtract 10 to y to go up each time up arrow pressed (consider x position will also move for rest of body not head)
-
-
-
-
-
-
 
 
 
