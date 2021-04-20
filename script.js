@@ -19,20 +19,19 @@
 const canvas = document.getElementById('canvas');
 const canvasContext = canvas.getContext('2d');
 
-let originalSnake = {
-    direction: null,
-    body: [ 
-        { x: 20, y: 30 }, 
-        { x: 10, y: 30 },
-        { x: 0, y: 30 }
-    ],
-    speed: 5
-};
-
 
 const snake = {
     direction: 'RIGHT',
-    body: [ 
+    body: [
+        { x: 110, y: 30 },
+        { x: 100, y: 30 },
+        { x: 90, y: 30 },
+        { x: 80, y: 30 },
+        { x: 70, y: 30 },
+        { x: 60, y: 30 }, 
+        { x: 50, y: 30 },
+        { x: 40, y: 30 },
+        { x: 30, y: 30 },
         { x: 20, y: 30 }, 
         { x: 10, y: 30 },
         { x: 0, y: 30 }
@@ -107,64 +106,35 @@ function moveSnake()    {
     }
 }
 
-
-
-
-// [1 2 3 4 5 6]
-
-// when we map we go through each items so:
-// 1
-// 2
-// 3
-// 4
-// 5
-// 6
-
-// our check is: is our head i.e. 1 equal to x?
-
-// 1 = 1 true
-// 2 = 1 false ...
-// 3 = 1 false ...
-
-
-// js how to delete first item in array
-
-// let bodyToCheck = snake.body minus head
-
-// bodyToCheck.map ...
-
-// ;; if condition
-// if
-// snake.body[0].x == bodyPart.x &&
-// snake.body[0].y == bodyPart.y
-// endGame()
-
-
-
-
-
 function checkEatsItself()  {
-    snake.body.map(bodyPart => {
-        if (snake.body[0].x == bodyPart.x && snake.body[0].y == bodyPart.y)   {
+    let bodyToCheck = snake.body.slice();
+    bodyToCheck.shift(); 
+
+    let headX = snake.body[0].x
+    let headY = snake.body[0].y
+
+    console.log("heads ", headX, headY)
+
+    bodyToCheck.map(bodyPart => {
+        if (headX == bodyPart.x && headY == bodyPart.y)   {
         endGame();
         }
+    console.log("x&y ", bodyPart.x, bodyPart.y)
     })
+    console.log("check ")
 }
 
 function drawEverything() { 
     moveSnake();
-
-    console.log(snake.body[0]);
+    checkBorder();
+    checkEatsItself();
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
     canvasContext.fillStyle = 'limegreen';
-    canvasContext.fillRect(snake.body[0].x, snake.body[0].y, 10, 10);
-    canvasContext.fillRect(snake.body[1].x, snake.body[1].y, 10, 10);
-    canvasContext.fillRect(snake.body[2].x, snake.body[2].y, 10, 10);
 
-    checkBorder();
-    checkEatsItself();
-    // for loop any continuation of the above so snake grows as he eats.
+    for (let i = 0; i < snake.body.length; i++)  {
+        canvasContext.fillRect(snake.body[i].x, snake.body[i].y, 10, 10);
+    }
 };
 
 
