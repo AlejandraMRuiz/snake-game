@@ -30,14 +30,14 @@ let originalSnake = {
 };
 
 
-let snake = {
-    direction: null,
+const snake = {
+    direction: 'RIGHT',
     body: [ 
         { x: 20, y: 30 }, 
         { x: 10, y: 30 },
         { x: 0, y: 30 }
     ],
-    speed: 5
+    speed: 10
 };
 
 
@@ -46,6 +46,7 @@ window.onload = function()  {
         drawEverything(snake.direction);} 
         ,150)
 };
+
 
 document.onkeydown = function (e) { 
     e.preventDefault();    
@@ -67,31 +68,34 @@ document.onkeydown = function (e) {
 };
 
 
-function drawEverything() {
+function moveSnake()    {
+    const snakeCopy = snake.body.map(snakePart => Object.assign({}, snakePart));
+
+
     if (snake.direction === 'RIGHT')  {
-        snake.body[0].x = snake.body[0].x + 10;
-        snake.body[1].x = snake.body[1].x + 10;
-        snake.body[2].x = snake.body[2].x + 10;
+        snake.body[0].x = snake.body[0].x + snake.speed; 
     }  
 
     if (snake.direction === 'LEFT')  {
-        snake.body[0].x = snake.body[0].x - 10;
-        snake.body[1].x = snake.body[1].x - 10;
-        snake.body[2].x = snake.body[2].x - 10;
+        snake.body[0].x = snake.body[0].x - snake.speed;
     }  
 
     if (snake.direction === 'UP')  {
-        snake.body[0].y = snake.body[0].y - 10;
-        snake.body[1].y = snake.body[1].y - 10;
-        snake.body[2].y = snake.body[2].y - 10;
+        snake.body[0].y = snake.body[0].y - snake.speed;
     }  
 
-// add 10 to y to go down each time down arrow pressed (consider x position will also move for rest of body not head)
     if (snake.direction === 'DOWN')  {
-        snake.body[0].y = snake.body[0].y + 10;
-        snake.body[1].y = snake.body[1].y + 10;
-        snake.body[2].y = snake.body[2].y + 10;
-    }  
+        snake.body[0].y = snake.body[0].y + snake.speed;
+    } 
+
+    for (var i = 1; i < snake.body.length; i++) {
+        snake.body[i] = snakeCopy[i - 1]; 
+    }
+}
+
+
+function drawEverything() { 
+    moveSnake();
 
     console.log(snake.body[0]);
     canvasContext.fillStyle = 'black';
