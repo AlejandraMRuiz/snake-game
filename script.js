@@ -41,58 +41,115 @@ const snake = {
 };
 
 
+let interval;
+
 window.onload = function()  {
-    setInterval(function()  {
+    interval = setInterval(function()  {
         drawEverything(snake.direction);} 
         ,150)
 };
 
 
 document.onkeydown = function (e) { 
-    e.preventDefault();    
+    e.preventDefault(); 
+
     if (e.key == ' ') {        
         snake.direction = 'STOP';    
     }
-    if (e.key == 'ArrowUp') {
+    else if (e.key == 'ArrowUp' && snake.direction !== 'DOWN') {
         snake.direction = 'UP';   
     }    
-    if (e.key == 'ArrowDown') {        
+    else if (e.key == 'ArrowDown' && snake.direction !== 'UP') {        
         snake.direction = 'DOWN';    
     }
-    if (e.key == 'ArrowLeft') {
+    else if (e.key == 'ArrowLeft' && snake.direction !== 'RIGHT') {
         snake.direction = 'LEFT';    
     }
-    if (e.key == 'ArrowRight') {        
+    else if (e.key == 'ArrowRight' && snake.direction !== 'LEFT') {        
         snake.direction = 'RIGHT';    
     }    
 };
 
+function endGame()  {
+    snake.direction = 'STOP';
+    clearInterval(interval);
+    alert('game over!');
+}
+
+function checkBorder()  {
+    if (snake.body[0].x > canvas.width || 
+        snake.body[0].y > canvas.height ||
+        snake.body[0].x < 0 ||
+        snake.body[0].y < 0)  {
+        endGame();
+    }
+};
 
 function moveSnake()    {
     const snakeCopy = snake.body.map(snakePart => Object.assign({}, snakePart));
 
+    switch(snake.direction) {
+        case 'RIGHT':  snake.body[0].x = snake.body[0].x + snake.speed;
+        break;
 
-    if (snake.direction === 'RIGHT')  {
-        snake.body[0].x = snake.body[0].x + snake.speed; 
-    }  
+        case 'LEFT':  snake.body[0].x = snake.body[0].x - snake.speed;
+        break;
 
-    if (snake.direction === 'LEFT')  {
-        snake.body[0].x = snake.body[0].x - snake.speed;
-    }  
+        case 'UP':  snake.body[0].y = snake.body[0].y - snake.speed;
+        break;
 
-    if (snake.direction === 'UP')  {
-        snake.body[0].y = snake.body[0].y - snake.speed;
-    }  
-
-    if (snake.direction === 'DOWN')  {
-        snake.body[0].y = snake.body[0].y + snake.speed;
-    } 
+        case 'DOWN':  snake.body[0].y = snake.body[0].y + snake.speed;
+        break;
+    }
 
     for (var i = 1; i < snake.body.length; i++) {
         snake.body[i] = snakeCopy[i - 1]; 
     }
 }
 
+
+
+
+// [1 2 3 4 5 6]
+
+// when we map we go through each items so:
+// 1
+// 2
+// 3
+// 4
+// 5
+// 6
+
+// our check is: is our head i.e. 1 equal to x?
+
+// 1 = 1 true
+// 2 = 1 false ...
+// 3 = 1 false ...
+
+
+// js how to delete first item in array
+
+// let bodyToCheck = snake.body minus head
+
+// bodyToCheck.map ...
+
+// ;; if condition
+// if
+// snake.body[0].x == bodyPart.x &&
+// snake.body[0].y == bodyPart.y
+// endGame()
+
+
+
+
+
+function checkEatsItself()  {
+    snake.body.map(bodyPart => {
+        if (snake.body[0].x == bodyPart.x && snake.body[0].y == bodyPart.y)   {
+        endGame();
+        }
+    })
+}
 
 function drawEverything() { 
     moveSnake();
@@ -104,6 +161,9 @@ function drawEverything() {
     canvasContext.fillRect(snake.body[0].x, snake.body[0].y, 10, 10);
     canvasContext.fillRect(snake.body[1].x, snake.body[1].y, 10, 10);
     canvasContext.fillRect(snake.body[2].x, snake.body[2].y, 10, 10);
+
+    checkBorder();
+    checkEatsItself();
     // for loop any continuation of the above so snake grows as he eats.
 };
 
@@ -118,8 +178,6 @@ function drawEverything() {
 // subtract 10 to x to go left each time left arrow pressed
 // add 10 to y to go down each time down arrow pressed (consider x position will also move for rest of body not head)
 // subtract 10 to y to go up each time up arrow pressed (consider x position will also move for rest of body not head)
-
-
 
 
 
