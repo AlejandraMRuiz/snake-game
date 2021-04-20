@@ -115,8 +115,9 @@ function checkEatsItself()  {
 
     let headX = snake.body[0].x
     let headY = snake.body[0].y
-
+    console.log("heads ", headX, headY)
     bodyToCheck.map(bodyPart => {
+        console.log("x&y ", bodyPart.x, bodyPart.y)
         if (headX == bodyPart.x && headY == bodyPart.y)   {
         endGame();
         }
@@ -128,23 +129,32 @@ function addApple()    {
     let tempY
 
     if (food.x == null && food.y == null)   {
-    tempX = Math.floor(Math.random() * (canvas.width / size)) * size;
-    tempY = Math.floor(Math.random() * (canvas.height / size)) * size;
-    }
+        tempX = Math.floor(Math.random() * (canvas.width / size)) * size;
+        tempY = Math.floor(Math.random() * (canvas.height / size)) * size;
 
-    snake.body.map(bodyPart => {
-        if (tempX == bodyPart.x && tempY == bodyPart.y)   {
-            addApple();
+        snake.body.map(bodyPart => {
+            if (tempX == bodyPart.x && tempY == bodyPart.y)   {
+                addApple();
         }
     })
 
     food.x = tempX;
     food.y = tempY;
+    }
+}
+
+function eatApple() {
+    if (snake.body[0].x == food.x && snake.body[0].y == food.y) {
+        snake.body.push({ x:food.x, y:food.y })     
+        food.x = null;
+        food.y = null;
+    }
 }
 
 function drawEverything() { 
     moveSnake();
     addApple();
+    eatApple();
     checkBorder();
     checkEatsItself();
     canvasContext.fillStyle = 'black';
