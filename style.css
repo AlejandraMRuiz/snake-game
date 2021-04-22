@@ -1,5 +1,11 @@
 /* style me */
 
-canvas  {
-    background: #000000;
+canvas {
+	background: #000000;
 }
+
+/* #score {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+} */

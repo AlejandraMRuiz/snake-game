@@ -1,23 +1,7 @@
-// TEST CASE
-// Description: Get entire snake body moving down together, seamlessly. 
-
-// 1. press right arrow btn.
-// EXPECTATION: 
-// entire snake moves right.
-// ACTUAL: works.
-
-// 2. press down arrown btn.
-// EXPECTATION: 
-// head moves down, 
-// midsection goes to head's prior position
-// and tail goes to midsection's original position.
-// ACTUAL: all 3 snake parts move down, but not in a chain.
-
-
-
 
 const canvas = document.getElementById('canvas');
 const canvasContext = canvas.getContext('2d');
+let scoreNumber = document.getElementById('score-number');
 const size = 10;
 
 
@@ -40,10 +24,10 @@ const snake = {
     speed: 10
 };
 
+
 let food = { x: null, y: null };
-
-
 let interval;
+
 
 window.onload = function()  {
     interval = setInterval(function()  {
@@ -72,11 +56,13 @@ document.onkeydown = function (e) {
     }    
 };
 
+
 function endGame()  {
     snake.direction = 'STOP';
     clearInterval(interval);
     alert('game over!');
-}
+};
+
 
 function checkBorder()  {
     if (snake.body[0].x > canvas.width || 
@@ -84,8 +70,9 @@ function checkBorder()  {
         snake.body[0].x < 0 ||
         snake.body[0].y < 0)  {
         endGame();
-    }
+    };
 };
+
 
 function moveSnake()    {
     const snakeCopy = snake.body.map(snakePart => Object.assign({}, snakePart));
@@ -102,12 +89,13 @@ function moveSnake()    {
 
         case 'DOWN':  snake.body[0].y = snake.body[0].y + snake.speed;
         break;
-    }
+    };
 
     for (var i = 1; i < snake.body.length; i++) {
         snake.body[i] = snakeCopy[i - 1]; 
-    }
-}
+    };
+};
+
 
 function checkEatsItself()  {
     let bodyToCheck = snake.body.slice();
@@ -120,9 +108,15 @@ function checkEatsItself()  {
         console.log("x&y ", bodyPart.x, bodyPart.y)
         if (headX == bodyPart.x && headY == bodyPart.y)   {
         endGame();
-        }
-    })
+        };
+    });
+};
+
+
+function updateScore()  {
+    scoreNumber++
 }
+
 
 function addApple()    {
     let tempX
@@ -135,28 +129,31 @@ function addApple()    {
         snake.body.map(bodyPart => {
             if (tempX == bodyPart.x && tempY == bodyPart.y)   {
                 addApple();
-        }
-    })
+                updateScore();
+            };
+        });
 
     food.x = tempX;
     food.y = tempY;
-    }
-}
+    };
+};
+
 
 function eatApple() {
     if (snake.body[0].x == food.x && snake.body[0].y == food.y) {
         snake.body.push({ x:food.x, y:food.y })     
         food.x = null;
         food.y = null;
-    }
-}
+    };
+};
+
 
 function drawEverything() { 
-    moveSnake();
+    checkEatsItself();
+    checkBorder();
     addApple();
     eatApple();
-    checkBorder();
-    checkEatsItself();
+    moveSnake();
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
     canvasContext.fillStyle = 'red';
@@ -165,26 +162,33 @@ function drawEverything() {
 
     for (let i = 0; i < snake.body.length; i++)  {
         canvasContext.fillRect(snake.body[i].x, snake.body[i].y, size, size);
-    }
+    };
 };
 
 
 
 
-// Requirements
-// Project will be written in:
-// HTML
-// CSS
-// Javascript
-// No Javascript libraries, frameworks, etc.
-// No following tutorials of snake game apps/projects
-// No copying code of other existing snake game apps/projects
-// Deliverables
+
+// Deliverables:
+
 // Snake game ends when:
 // Snake touches itself
+// DONE
+
 // Snake touches the outside border
+// DONE
+
 // When the game ends, the gameplay should stop and the user should be notified that the game is over
+// DONE
+
 // The snake should grow one length whenever it eats the apple
+// DONE
+
 // The apple should randomly place itself on the board after snake consumes the apple
+// DONE
+
 // The snake should be controlled by the arrow keys on the keyboard
-// The game will  show a score of how many apples have been eaten
+// DONE
+
+// The game will show a score of how many apples have been eaten
+// in progress
