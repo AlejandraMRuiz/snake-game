@@ -56,10 +56,22 @@ document.onkeydown = function (e) {
 };
 
 
+function restartGame()  {
+    snake.direction = 'RIGHT';
+    snake.body = [
+            { x: 20, y: 30 }, 
+            { x: 10, y: 30 },
+            { x: 0, y: 30 }
+        ];
+    snake.speed = 10;
+};
+
+
 function endGame()  {
     snake.direction = 'STOP';
     clearInterval(interval);
     alert('game over!');
+    restartGame();
 };
 
 
