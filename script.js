@@ -1,8 +1,8 @@
-
 const canvas = document.getElementById('canvas');
 const canvasContext = canvas.getContext('2d');
-let scoreNumber = document.getElementById('score-number');
+const scoreDisplay = document.querySelector('.score-display');
 const size = 10;
+let score = 0;
 
 
 const snake = {
@@ -113,9 +113,10 @@ function checkEatsItself()  {
 };
 
 
-function updateScore()  {
-    scoreNumber++
-}
+// function updateScore()  {
+//     score++;
+//     console.log('score: ', score);
+// }
 
 
 function addApple()    {
@@ -129,7 +130,9 @@ function addApple()    {
         snake.body.map(bodyPart => {
             if (tempX == bodyPart.x && tempY == bodyPart.y)   {
                 addApple();
-                updateScore();
+                score++;
+                scoreDisplay.textContent = score;
+                console.log('score: ', score);
             };
         });
 
@@ -192,3 +195,18 @@ function drawEverything() {
 
 // The game will show a score of how many apples have been eaten
 // in progress
+
+
+
+// MISC:
+
+// 0. get rid of extra snake parts
+// 00. delete console.log(s)
+// 1. a quick Left-Up movement erroneously ends game
+
+
+
+// ADD STYLING
+
+// 0. title
+// 1. center everything
