@@ -1,12 +1,3 @@
-// TEST CASE:
-
-// EXPECTATION
-// game resets after clicking "ok" on game over alert.
-
-// ACTUAL
-// game requires reload to continue playing.
-
-
 const canvas = document.getElementById('canvas');
 const canvasContext = canvas.getContext('2d');
 const size = 10;
