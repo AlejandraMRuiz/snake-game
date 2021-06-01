@@ -16,14 +16,9 @@ const snake = {
 
 
 let food = { x: null, y: null };
-let interval;
 
 
-window.onload = function()  {
-    interval = setInterval(function()  {
-        drawEverything(snake.direction);} 
-        ,150)
-};
+window.onload = () => {setInterval(() => drawEverything(), 150);};
 
 
 document.onkeydown = function (e) { 
@@ -44,7 +39,7 @@ document.onkeydown = function (e) {
     else if (e.key == 'ArrowRight' && snake.direction !== 'LEFT') {        
         snake.direction = 'RIGHT';    
     }    
-};
+}
 
 
 function restartGame()  {
@@ -55,15 +50,13 @@ function restartGame()  {
             { x: 0, y: 30 }
         ];
     snake.speed = 10;
-};
+}
 
 
 function endGame()  {
-    snake.direction = 'STOP';
-    clearInterval(interval);
     alert('game over!');
     restartGame();
-};
+}
 
 
 function checkBorder()  {
@@ -72,76 +65,60 @@ function checkBorder()  {
         snake.body[0].x < 0 ||
         snake.body[0].y < 0)  {
         endGame();
-    };
-};
+    }
+}
 
 
 function moveSnake()    {
     const snakeCopy = snake.body.map(snakePart => Object.assign({}, snakePart));
 
     switch(snake.direction) {
-        case 'RIGHT':  snake.body[0].x = snake.body[0].x + snake.speed;
+        case 'RIGHT':  snake.body[0].x += snake.speed;
         break;
 
-        case 'LEFT':  snake.body[0].x = snake.body[0].x - snake.speed;
+        case 'LEFT':  snake.body[0].x -= snake.speed;
         break;
 
-        case 'UP':  snake.body[0].y = snake.body[0].y - snake.speed;
+        case 'UP':  snake.body[0].y -= snake.speed;
         break;
 
-        case 'DOWN':  snake.body[0].y = snake.body[0].y + snake.speed;
+        case 'DOWN':  snake.body[0].y += snake.speed;
         break;
     };
 
     for (var i = 1; i < snake.body.length; i++) {
         snake.body[i] = snakeCopy[i - 1]; 
-    };
-};
+    }
+}
 
 
 function checkEatsItself()  {
     let bodyToCheck = snake.body.slice();
     bodyToCheck.shift(); 
 
-    let headX = snake.body[0].x
-    let headY = snake.body[0].y
-    bodyToCheck.map(bodyPart => {
-        if (headX == bodyPart.x && headY == bodyPart.y)   {
-        endGame();
-        };
-    });
-};
+    let head = snake.body[0];
+    bodyToCheck.map(({x, y}) => head.x == x && head.y == y && endGame());
+}
 
 
 function addApple()    {
-    let tempX
-    let tempY
-
     if (food.x == null && food.y == null)   {
-        tempX = Math.floor(Math.random() * (canvas.width / size)) * size;
-        tempY = Math.floor(Math.random() * (canvas.height / size)) * size;
+        food.x = Math.floor(Math.random() * (canvas.width / size)) * size;
+        food.y = Math.floor(Math.random() * (canvas.height / size)) * size;
 
-        snake.body.map(bodyPart => {
-            if (tempX == bodyPart.x && tempY == bodyPart.y)   {
-                addApple();
-            };
-        });
-
-    food.x = tempX;
-    food.y = tempY;
-    };
-};
+        snake.body.map(({x, y}) => (food.x === x && food.y === y) && addApple());
+    }
+}
 
 
 function eatApple() {
     if (snake.body[0].x == food.x && snake.body[0].y == food.y) {
         snake.body.push({ x:food.x, y:food.y })     
-        food.x = null;
-        food.y = null;
+        food = { x: null, y: null };
         score++;
         document.getElementById("score-value").textContent = score;
-    };
-};
+    }
+}
 
 
 function drawEverything() { 
@@ -150,13 +127,28 @@ function drawEverything() {
     addApple();
     eatApple();
     moveSnake();
+    drawCanvas();
+    drawApple();
+    drawSnake();
+}
+
+
+function drawCanvas()   {
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0,0,canvas.width,canvas.height);
+}
+
+
+function drawApple()    {
     canvasContext.fillStyle = 'red';
     canvasContext.fillRect(food.x, food.y, size, size);
+}
+
+
+function drawSnake()    {
     canvasContext.fillStyle = 'limegreen';
 
     for (let i = 0; i < snake.body.length; i++)  {
         canvasContext.fillRect(snake.body[i].x, snake.body[i].y, size, size);
-    };
-};
+    }
+}
